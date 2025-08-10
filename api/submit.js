@@ -1,28 +1,37 @@
-const fetch = require('node-fetch');
-
 module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Only POST method allowed' });
+  // Allow requests from any origin (for testing)
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(204).end();
   }
 
-  const { name, id } = req.body;
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Only POST allowed' });
+  }
 
-  if (!name || !id) {
-    return res.status(400).json({ error: 'Name and ID are required' });
+  const { name, id, password } = req.body;
+
+  if (!name || !id || !password) {
+    return res.status(400).json({ error: 'Missing required fields' });
   }
 
   try {
-    const response = await fetch('YOUR_APPS_SCRIPT_WEB_APP_URL', {
+    const response = await fetch('YOUR_APPS_SCRIPT_URL', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, id })
+      body: JSON.stringify({ name, id, password }),
     });
 
     if (!response.ok) {
       return res.status(500).json({ error: 'Failed to send data to Google Sheets' });
     }
 
-    return res.status(200).json({ message: 'Data sent successfully!' });
+    const data = await response.json();
+    return res.status(200).json({ message: 'Success', data });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
