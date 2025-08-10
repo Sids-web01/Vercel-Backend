@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwIr2PwpG1NrqnpEZpBJTJzMPvKrxMK6hhtDtqFlCrXRTwohjpQIxwJUGgIPjqtp1-o9A/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxgizTn9sFkYztgXY7YOFBUhJGlVC1g0aVkwtxLWcSO-o6Xr1D_TMoOKCKHcMM-2F7Uow/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, id, password }),
