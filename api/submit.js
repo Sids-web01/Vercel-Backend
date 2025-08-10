@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const response = await fetch('YOUR_APPS_SCRIPT_URL', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwIr2PwpG1NrqnpEZpBJTJzMPvKrxMK6hhtDtqFlCrXRTwohjpQIxwJUGgIPjqtp1-o9A/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, id, password }),
